@@ -29,8 +29,11 @@ def search_data(id:int):
     return{'result': result.to_dict(orient='records')}
 
 #Menambahkan data
-@app.post("/data/{new_data}")
-def add_data(new_data):
-    new_row = pd.DataFrame(new_data)
-    data = pd.concat([data, new_row], ignore_index= True)
-    return {'message': 'Data is updated!'}
+@app.post("/data/add")
+def add_data(new_data:dict):
+    global data
+    
+    new_row = pd.DataFrame([new_data])
+    data = pd.concat([data, new_row], ignore_index=True)
+
+    return {'message':data.to_dict(orient='records')}
